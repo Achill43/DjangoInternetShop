@@ -1,0 +1,85 @@
+{% extends "Shop/layout.html" %}
+   
+{% block content %}
+    {% load staticfiles %}
+       <div class="container-fixed">
+           <div class="row">
+               <div class="mysliderWraper">
+                   {% for item in hits %}
+                        <div class="slide fade">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <a href="{% url 'product' item.id %}"><img src="{{ item.mainImg }}" alt=""></a>
+                                </div>
+                                <div class="col-sm-5">
+                                    <h3>{{ item.name }}</h3>
+                                    <p>{{ item.descriction|truncatechars_html:140 }}</p>
+                                    <form class="addToCart" action="{% url 'addToCart' %}">
+                                    {% csrf_token %}
+                                    <button class="myBtn basketBtn" id="{{item.id}}"">В корзину</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                   {% endfor %}
+                <div class="dotList">
+                    <span class="dot" id="1"></span>
+                    <span class="dot" id="2"></span>
+                    <span class="dot" id="3"></span>
+                    <span class="dot" id="4"></span>
+                    <span class="dot" id="5"></span>
+                </div>
+               </div>
+           </div>
+           <div class="row" id="sliderSecond">
+               <div class="col-md-1">
+                   <img src="{% static 'Shop/css/img/slideBtn1.png'%}" alt="" id="prevS">
+               </div>
+               <div class="col-md-10">
+                <div class="all">
+                    <div class="slider">
+                       <div class="slider_hots">
+                       {% for item in news %}
+                       <div class="slider_block">
+                           <div class="col-md-6">
+                               <a href="{% url 'product' item.id %}"><img src="{{ item.mainImg }}" alt=""></a>
+                           </div>
+                           <div class="col-md-6">
+                               <h3>{{item.name}}</h3>
+                               <form class="addToCart" action="{% url 'addToCart' %}">
+                                    {% csrf_token %}
+                                <button class="basketBtn" id="{{item.id}}"">В корзину</button>
+                                </form>
+                           </div>
+                       </div>
+                       {% endfor %}
+                   </div><!---.slider_hots--->                 
+                </div><!---.slider--->
+            </div><!---.all--->
+               </div>
+               <div class="col-md-1">
+                   <img src="{% static 'Shop/css/img/slideBtn.png' %}" alt="" id="nextS">
+               </div>
+           </div>
+           <div class="row" id="goodsWrapper">
+               <h3 class="myTitle">
+                   Sale products
+               </h3>
+               <div class="row" id="goods">
+               {% for item in sales %}
+                   <div class="good">
+                       <a href="{% url 'product' item.id %}"> <img src="{{ item.mainImg }}" alt=""> </a>
+                       <h3>{{item.name}} </h3>
+                       <span class="price">{{item.price}}</span>
+                       <form class="addToCart" action="{% url 'addToCart' %}">
+                            {% csrf_token %}
+                        <button class="basketBtn" id="{{item.id}}"">В корзину</button>
+                        </form>
+                   </div>
+                {% endfor %}
+               </div>
+           </div>
+       </div>
+       
+    <script src="{% static 'Shop/js/mainSlider.js' %}"></script>
+{% endblock %}

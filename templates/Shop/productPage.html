@@ -1,0 +1,23 @@
+{% extends "Shop/layout.html" %}
+   
+{% block content %}
+    
+    {% load staticfiles %}
+    
+       <div class="container-fixed">
+           <div class="row">
+           <div class="col-md-4">
+                <img src="/{{product.mainImg}}" alt="" style="display: block; margin: 15px auto">
+           </div>
+           <div class="col-md-7">
+               <h2>{{product.name}}</h2>
+               <h3>Price: {{product.price}}</h3>
+               <p>{{product.descriction}}</p>
+               <form class="addToCart" action="{% url 'addToCart' %}">
+                    {% csrf_token %}
+                    <button class="btn basketBtn" id="{{product.id}}"">В корзину</button>
+               </form>
+           </div>
+           </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "Shop/layout.html" %}
+   
+{% block content %}
+    {% load staticfiles %}
+       <div class="container-fixed">
+           <div class="row" id="goodsWrapper">
+               <h3 class="myTitle">
+                   {{mark.name}}
+               </h3>
+               <div class="row" id="goods">
+               {% for product in products %}
+                   <div class="good">
+                       <a href="{% url 'product' product.id %}"> <img src="{{ product.mainImg }}" alt=""> </a>
+                       <h3>{{product.name}} </h3>
+                       <span class="price">{{product.price}}</span>
+                       <form class="addToCart" action="{% url 'addToCart' %}">
+                            {% csrf_token %}
+                        <button class="basketBtn" id="{{product.id}}" date-name="{{product.name}}">В корзину</button>
+                        </form>
+                   </div>
+                {% endfor %}
+               </div>
+           </div>
+           <div class="row">
+                <ul class="pagination">
+                    {% for page in currentPage.paginator.page_range %}
+                        {% if page == currentPage.number  %}
+                            <li class="active"><a href="{% url 'eyestoppers' mark.name page %}">{{page}}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'eyestoppers' mark.name page %}">{{page}}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+           </div>
+       </div>
+       
+    <script src="{% static 'Shop/js/mainSlider.js' %}"></script>
+{% endblock %}
